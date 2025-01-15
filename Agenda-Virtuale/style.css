@@ -1,0 +1,544 @@
+/* Stile generale */
+body {
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+}
+/* Header */
+header {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+   background-color: #2c3e50;
+   color: white;
+   padding: 20px 20px; /* Aumentato il padding verticale */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+header h1 {
+   font-size: 24px;
+   margin: 0;
+   text-align: center;
+   flex: 1;
+}
+/* Stile per il titolo come link */
+#home-link {
+   color: white; /* Colore del testo bianco */
+   text-decoration: none; /* Rimuove la sottolineatura predefinita */
+}
+/* Stile per il titolo quando ci si passa sopra con il mouse */
+#home-link:hover {
+   text-decoration: underline; /* Aggiunge la sottolineatura al passaggio del mouse */
+   cursor: pointer; /* Cambia il cursore per indicare che è cliccabile */
+}
+/* Menu container */
+#menu-container {
+   position: absolute;
+   left: 20px;
+}
+#menu-toggle {
+   background: none;
+   border: none;
+   font-size: 24px;
+   color: white;
+   cursor: pointer;
+}
+/* Dropdown menu */
+#dropdown-menu {
+   display: none;
+   position: absolute;
+   top: 100%;
+   left: 0;
+   background-color: #2c3e50;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   padding: 10px 0;
+   border-radius: 4px;
+}
+#dropdown-menu ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+#dropdown-menu ul li {
+   margin: 0;
+}
+#dropdown-menu ul li a {
+   display: block;
+   padding: 10px 20px;
+   color: white;
+   text-decoration: none;
+}
+#dropdown-menu ul li a:hover {
+   background-color: #34495e;
+}
+/* Mostrare il menu quando attivato */
+#menu-container.active #dropdown-menu {
+   display: block;
+}
+/* Stile per il testo sotto l'header */
+main {
+   padding: 20px;
+   text-align: center;
+}
+main p {
+   font-size: 20px;
+   color: #333;
+}
+/* Nascondi la sezione calendario inizialmente */
+.hidden {
+   display: none;
+}
+/* Sezione Calendario */
+#calendar-section {
+   padding: 20px;
+   text-align: center;
+}
+.calendar-container {
+   width: 80%;
+   margin: 0 auto;
+}
+.calendar-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   font-size: 24px;
+   margin-bottom: 20px;
+}
+#calendar-month {
+   font-weight: bold;
+}
+button {
+   background-color: #2c3e50;
+   color: white;
+   border: none;
+   padding: 10px;
+   cursor: pointer;
+}
+button:hover {
+   background-color: #34495e;
+}
+/* Giornate della settimana */
+.calendar-days-of-week {
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+   margin-bottom: 10px;
+}
+.calendar-days-of-week span {
+   font-weight: bold;
+   padding: 10px;
+   background-color: #2c3e50;
+   color: white;
+}
+/* Giorni del mese */
+.calendar-days {
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+   gap: 5px;
+}
+.calendar-days span {
+   padding: 15px;
+   cursor: pointer;
+   background-color: #f4f4f4;
+   border-radius: 5px;
+}
+.calendar-days span:hover {
+   background-color: #34495e;
+   color: white;
+}
+/* Modal per visualizzare l'evento */
+.modal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.7);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 999;
+   visibility: hidden;
+   opacity: 0;
+   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.modal:not(.hidden) {
+   visibility: visible;
+   opacity: 1;
+}
+.modal-content {
+   background-color: #ffffff;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+   width: 90%;
+   max-width: 500px;
+   text-align: left;
+   font-family: Arial, sans-serif;
+}
+.modal-content h2 {
+   font-size: 24px;
+   color: #2c3e50;
+   margin-bottom: 20px;
+   text-align: center;
+   border-bottom: 2px solid #2c3e50;
+   padding-bottom: 10px;
+}
+.modal-content p {
+   margin: 10px 0;
+   font-size: 16px;
+   color: #333;
+}
+.modal-buttons {
+   display: flex;
+   justify-content: none;
+   gap: 10px;
+   margin-top: 20px;
+}
+.modal-buttons button {
+   flex: 1;
+   padding: 10px;
+   font-size: 14px;
+   font-weight: bold;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+.modal-buttons #delete-event-button {
+   background-color: #e74c3c;
+   color: white;
+}
+.modal-buttons #delete-event-button:hover {
+   background-color: #c0392b;
+}
+.modal-buttons #close-modal-button {
+   background-color: #2c3e50;
+   color: white;
+}
+.modal-buttons #close-modal-button:hover {
+   background-color: #34495e;
+}
+/* Form per aggiungere un esame */
+#event-form {
+   margin-top: 30px;
+   padding: 25px;
+   border: 1px solid #2c3e50;
+   border-radius: 10px;
+   background-color: #f7f9fc;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   max-width: 400px;
+   margin-left: auto;
+   margin-right: auto;
+   font-family: Arial, sans-serif;
+}
+#event-form h2 {
+   margin-bottom: 20px;
+   font-size: 24px;
+   color: #2c3e50;
+   text-align: center;
+   border-bottom: 2px solid #2c3e50;
+   padding-bottom: 10px;
+}
+#event-form label {
+   display: block;
+   font-weight: bold;
+   margin-bottom: 5px;
+   color: #2c3e50;
+}
+#event-form input {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 15px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+}
+#event-form input:focus {
+   outline: none;
+   border-color: #2c3e50;
+   box-shadow: 0 0 5px rgba(44, 62, 80, 0.5);
+}
+#event-form button {
+   width: 100%;
+   padding: 10px;
+   font-size: 16px;
+   background-color: #2c3e50;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   font-weight: bold;
+}
+#event-form button:hover {
+   background-color: #34495e;
+}
+/* Layout per il titolo e form */
+#event-form h2,
+#event-form {
+   text-align: center;
+}
+/* Responsiveness */
+@media (max-width: 768px) {
+   .modal-content {
+       width: 95%;
+   }
+   #event-form {
+       width: 90%;
+   }
+}
+/* Stili per la sezione Gestione Esami */
+#manage-exams {
+   background-color: #f4f4f9; /* Colore di sfondo delicato */
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   margin-top: 20px;
+   max-width: 800px;
+   margin-left: auto;
+   margin-right: auto;
+}
+#manage-exams h1 {
+   text-align: center;
+   font-size: 2em;
+   margin-bottom: 20px;
+   color: #333;
+}
+#exam-form {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+#exam-form label {
+   font-size: 1.1em;
+   color: #333;
+}
+#exam-form input, #exam-form select {
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 1em;
+   width: 100%;
+   box-sizing: border-box;
+}
+#exam-form button {
+   background-color: #2c3e50;
+   color: white;
+   border: none;
+   padding: 12px 20px;
+   font-size: 1.2em;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s;
+}
+#exam-form button:hover {
+   background-color: #34495e;
+}
+#lode-container {
+   display: none; /* Inizialmente nascosto, visibile se necessario */
+   margin-top: 10px;
+}
+#exam-lode {
+   padding: 8px;
+   font-size: 1em;
+   border-radius: 5px;
+   border: 1px solid #ccc;
+   width: 100%;
+   box-sizing: border-box;
+}
+#exam-list {
+   list-style-type: none;
+   padding: 0;
+}
+#exam-list li {
+   background-color: #fff;
+   border: 1px solid #ddd;
+   margin: 10px 0;
+   padding: 10px;
+   border-radius: 5px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+#exam-list li span {
+   font-weight: bold;
+}
+
+#stats {
+   text-align: center;
+   font-size: 1.2em;
+   color: #555;
+   margin-top: 20px;
+}
+
+
+/* Stile generale per la Dashboard */
+#dashboard-section {
+  padding: 20px;
+  background-color: #f7f9fc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+
+/* Titolo principale */
+#dashboard-section h1 {
+  font-size: 2em;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+
+/* Titoli delle sezioni */
+#dashboard-section h2 {
+  font-size: 1.5em;
+  color: #34495e;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #2c3e50;
+  padding-bottom: 5px;
+}
+
+
+/* Paragrafi informativi */
+#dashboard-section p {
+  font-size: 1.1em;
+  color: #333;
+  margin: 5px 0;
+}
+
+
+/* Liste degli esami */
+#dashboard-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+
+#dashboard-section ul li {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1.1em;
+  color: black;
+}
+
+
+/* Nessun dato */
+#dashboard-section ul li:first-child {
+  text-align: left;
+  color: black;
+  font-style: normal;
+}
+
+
+/* Sezioni della Dashboard */
+#dashboard-section div {
+  margin-bottom: 20px;
+}
+
+
+/* Barra di progresso (opzionale, se decidi di usarla in futuro) */
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 20px;
+}
+
+
+.progress-fill {
+  height: 100%;
+  background-color: #2c3e50;
+  width: 0%; /* Aggiorna dinamicamente tramite JavaScript */
+  transition: width 0.3s ease-in-out;
+}
+
+
+/* Stile generale della home */
+main {
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+
+main h1 {
+  font-size: 2.5em;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+
+main p {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+
+/* Contenitore dei blocchi */
+#home-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+
+/* Stile dei blocchi cliccabili */
+.home-block {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+
+.home-block h2 {
+  font-size: 1.5em;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+
+.home-block p {
+  font-size: 1em;
+  color: #555;
+}
+
+
+/* Hover sui blocchi */
+.home-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Responsività per schermi più piccoli */
+@media (max-width: 768px) {
+  #home-links {
+      flex-direction: column;
+      align-items: center;
+  }
+
+
+  .home-block {
+      width: 90%;
+      margin-bottom: 20px;
+  }
+}

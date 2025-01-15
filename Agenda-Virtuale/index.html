@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Virtuale</title>
+  <link rel="stylesheet" href="style.css"> <!-- Link al file CSS -->
+</head>
+<body>
+  <header>
+      <div id="menu-container">
+          <button id="menu-toggle" aria-label="Apri menu">&#9776;</button>
+          <nav id="dropdown-menu">
+              <ul>
+                  <li><a href="#dashboard" id="dashboard-link">Dashboard</a></li>
+                  <li><a href="javascript:void(0);" id="calendar-link">Calendario</a></li>
+                  <li><a href="javascript:void(0);" id="manage-exams-link">Gestione Esami</a></li>
+              </ul>
+          </nav>
+      </div>
+      <h1><a href="#" id="home-link">Agenda Virtuale</a></h1>
+  </header>
+   <!-- Sezione principale -->
+   <main id="main-section">
+    <p><strong style="font-size: 1.2em; color: black;">Benvenuto nella tua agenda virtuale</strong></p>  
+    <p>Scegli una delle opzioni per iniziare:</p>
+ 
+ 
+    <div id="home-links">
+        <!-- Blocco Dashboard -->
+        <div class="home-block" id="dashboard-block" onclick="showSection('dashboard-section'); updateDashboard();">
+            <h2>Dashboard</h2>
+            <p>Visualizza le statistiche e i tuoi progressi.</p>
+        </div>
+ 
+ 
+        <!-- Blocco Calendario -->
+        <div class="home-block" id="calendar-block" onclick="showSection('calendar-section');">
+            <h2>Calendario Esami</h2>
+            <p>Gestisci le date dei tuoi esami.</p>
+        </div>
+ 
+ 
+        <!-- Blocco Gestione Esami -->
+        <div class="home-block" id="manage-exams-block" onclick="showSection('manage-exams');">
+            <h2>Gestione Esami</h2>
+            <p>Registra i tuoi esami e tieni traccia dei voti.</p>
+        </div>
+    </div>
+ </main>
+
+</main>
+
+
+
+
+ 
+
+
+ <!-- Sezione Dashboard -->
+<section id="dashboard-section" class="hidden">
+   <h1>Dashboard</h1>
+   <p>Benvenuto nella tua Dashboard. Qui trovi il riepilogo delle tue attività.</p>
+
+
+   <!-- Media aritmetica e ponderata -->
+   <div id="dashboard-averages">
+       <h2>Media Totale</h2>
+       <p>Media Aritmetica: <span id="arithmetic-mean">0</span></p>
+       <p>Media Ponderata: <span id="weighted-mean">0</span></p>
+   </div>
+
+
+   <!-- Crediti totali conseguiti -->
+   <div id="dashboard-credits">
+       <h2>CFU Totali Conseguite</h2>
+       <p><span id="total-credits">0</span> crediti</p>
+   </div>
+
+
+   <!-- Esami mancanti -->
+   <div id="dashboard-missing-exams">
+       <h2>Esami Mancanti</h2>
+       <ul id="missing-exams-list">
+           <li>Nessun esame programmato</li>
+       </ul>
+   </div>
+
+
+   <!-- Esami svolti -->
+   <div id="dashboard-completed-exams">
+       <h2>Esami Svolti</h2>
+       <ul id="completed-exams-list">
+           <li>Nessun esame registrato</li>
+       </ul>
+   </div>
+</section>
+
+
+
+
+
+
+  <!-- Sezione Calendario (invisibile inizialmente) -->
+  <!-- Sezione Calendario -->
+  <section id="calendar-section" class="hidden">
+      <div class="calendar-header">
+          <button id="prev-month">&#60;</button>
+          <h2 id="calendar-month"></h2>
+          <button id="next-month">&#62;</button>
+      </div>
+      <div class="calendar-days-of-week">
+          <span>Lun</span>
+          <span>Mar</span>
+          <span>Mer</span>
+          <span>Gio</span>
+          <span>Ven</span>
+          <span>Sab</span>
+          <span>Dom</span>
+      </div>
+      <div id="calendar-days" class="calendar-days"></div>
+
+
+
+
+      <!-- Modal per visualizzare l'evento -->
+      <div id="event-modal" class="modal hidden">
+          <div class="modal-content">
+              <h2>Dettagli Esame</h2>
+              <p><strong>Nome dell'Esame:</strong> <span id="modal-event-name"></span></p>
+              <p><strong>Data:</strong> <span id="modal-event-date"></span></p>
+              <p><strong>Orario:</strong> <span id="modal-event-time"></span></p>
+              <p><strong>Aula:</strong> <span id="modal-event-room"></span></p>
+              <div class="modal-buttons">
+                  <button id="delete-event-button" class="delete-btn">Elimina Esame</button>
+                  <button id="close-modal-button">Chiudi</button>
+              </div>
+          </div>
+      </div>
+    
+      <!-- Form per aggiungere un evento -->
+      <h2>Aggiungi Esame</h2>
+      <form id="event-form">
+          <label for="event-date">Data dell'Esame:</label>
+          <input type="date" id="event-date" required>
+
+
+
+
+          <label for="event-title">Nome dell'Esame:</label>
+          <input type="text" id="event-title" required>
+
+
+
+
+          <label for="event-time">Orario dell'Esame:</label>
+          <input type="time" id="event-time" required>
+
+
+
+
+          <label for="event-room">Nome dell'Aula:</label>
+          <input type="text" id="event-room" required>
+
+
+
+
+          <button type="submit">Aggiungi Esame</button>
+      </form>
+  </section>
+
+
+
+
+  <!-- Gestione Esami -->
+  <section id="manage-exams" style="display: none;"> <!-- Modifica l'ID da 'manage-exams-link' a 'manage-exams' -->
+      <h1>Gestione Esami</h1>
+    
+      <!-- Form di inserimento esame -->
+      <form id="exam-form">
+          <label for="exam-name">Nome Esame:</label>
+          <input type="text" id="exam-name" required>
+
+
+
+
+          <label for="exam-credits">Crediti:</label>
+          <input type="number" id="exam-credits" required>
+
+
+
+
+          <label for="exam-grade">Voto:</label>
+          <input type="number" id="exam-grade" min="18" max="30" required>
+
+
+
+
+          <div id="lode-container" style="display: none;">
+              <label for="exam-lode">Lode:</label>
+              <select id="exam-lode">
+                  <option value="no">No</option>
+                  <option value="yes">Sì</option>
+              </select>
+          </div>
+
+
+
+
+          <button type="submit">Aggiungi Esame</button>
+      </form>
+   
+
+
+
+
+     <h2>Elenco Esami</h2>
+    <ul id="exam-list"></ul> <!-- Sposta l'elenco subito sotto il titolo -->
+    <h3>Statistiche</h3>
+    <p id="stats">Nessun dato disponibile</p>
+   
+  </section>
+
+
+
+
+  <script src="calendar.js"></script> <!-- Link al file JavaScript -->
+  <script src="script.js"></script> <!-- Link al file JavaScript -->
+</body>
+</html>
